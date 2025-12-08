@@ -50,6 +50,18 @@ export default function Header() {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
+  // Prevent body scroll when mobile menu is open
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isMobileMenuOpen]);
+
   const handleLogout = () => {
     logout();
     setIsUserMenuOpen(false);
@@ -331,9 +343,9 @@ export default function Header() {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="lg:hidden fixed inset-0 top-16 bg-carbon-950/98 backdrop-blur-xl z-40"
+            className="lg:hidden fixed inset-0 top-16 bg-carbon-950 z-40 overflow-y-auto"
           >
-            <nav className="container mx-auto px-4 py-8">
+            <nav className="container mx-auto px-4 py-8 pb-24">
               <div className="flex flex-col gap-2">
                 {navLinks.map((link, index) => (
                   <motion.div
