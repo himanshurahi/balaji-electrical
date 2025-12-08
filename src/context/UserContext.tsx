@@ -1,6 +1,7 @@
 'use client';
 
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { Zap } from 'lucide-react';
 
 export interface User {
   id: string;
@@ -309,6 +310,40 @@ export function UserProvider({ children }: { children: ReactNode }) {
     setOrders(prev => [newOrder, ...prev]);
     return newOrder;
   };
+
+  // Show full-page loader while checking authentication
+  // This prevents layout flash and will be useful for server-side auth
+  if (isLoading) {
+    return (
+      <div className="fixed inset-0 z-[100] flex items-center justify-center bg-carbon-950">
+        <div className="text-center">
+          {/* Animated Logo */}
+          <div className="relative mb-6">
+            <div className="w-20 h-20 mx-auto rounded-2xl bg-gradient-to-br from-electric-500 to-electric-600 flex items-center justify-center animate-pulse">
+              <Zap className="w-10 h-10 text-white" />
+            </div>
+            {/* Glow effect */}
+            <div className="absolute inset-0 w-20 h-20 mx-auto rounded-2xl bg-electric-500/30 blur-xl animate-pulse" />
+          </div>
+          
+          {/* Brand Name */}
+          <h1 className="font-display text-2xl font-bold text-white tracking-wider mb-2">
+            BALAJI
+          </h1>
+          <p className="text-xs text-electric-400 tracking-widest mb-6">
+            ELECTRICALS
+          </p>
+          
+          {/* Loading indicator */}
+          <div className="flex items-center justify-center gap-1">
+            <div className="w-2 h-2 rounded-full bg-electric-400 animate-bounce" style={{ animationDelay: '0ms' }} />
+            <div className="w-2 h-2 rounded-full bg-electric-400 animate-bounce" style={{ animationDelay: '150ms' }} />
+            <div className="w-2 h-2 rounded-full bg-electric-400 animate-bounce" style={{ animationDelay: '300ms' }} />
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <UserContext.Provider
