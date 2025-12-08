@@ -119,13 +119,11 @@ export default function CheckoutPage() {
     // Mark order as completed (prevents redirect to cart when clearing)
     setOrderCompleted(true);
     
-    // Navigate first, then clear cart after a small delay to prevent flash
-    router.push(`/checkout/confirmation?orderId=${orderId}`);
+    // Clear cart before navigation
+    clearCart();
     
-    // Clear cart after navigation starts
-    setTimeout(() => {
-      clearCart();
-    }, 100);
+    // Navigate to confirmation page
+    router.push(`/checkout/confirmation?orderId=${orderId}`);
   };
 
   const nextStep = () => {
@@ -145,6 +143,19 @@ export default function CheckoutPage() {
   };
 
   const getCurrentStepIndex = () => steps.findIndex(s => s.id === currentStep);
+
+  // Show full-page loading overlay during order processing to prevent footer flash
+  if (isProcessing) {
+    return (
+      <div className="fixed inset-0 z-50 flex items-center justify-center bg-carbon-950">
+        <div className="text-center">
+          <Loader2 className="w-12 h-12 text-electric-400 animate-spin mx-auto mb-4" />
+          <p className="text-white font-semibold text-lg">Processing your order...</p>
+          <p className="text-carbon-400 text-sm mt-2">Please wait while we confirm your payment</p>
+        </div>
+      </div>
+    );
+  }
 
   if (isLoading || !user) {
     return (
