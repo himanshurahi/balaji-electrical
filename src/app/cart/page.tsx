@@ -305,10 +305,13 @@ export default function CartPage() {
                 </div>
 
                 {/* Checkout Button */}
-                <button className="w-full py-4 rounded-xl bg-gradient-to-r from-electric-500 to-electric-600 text-white font-bold text-lg flex items-center justify-center gap-2 hover:shadow-lg hover:shadow-electric-500/30 transition-all">
+                <Link 
+                  href="/checkout"
+                  className="w-full py-4 rounded-xl bg-gradient-to-r from-electric-500 to-electric-600 text-white font-bold text-lg flex items-center justify-center gap-2 hover:shadow-lg hover:shadow-electric-500/30 transition-all"
+                >
                   Proceed to Checkout
                   <ArrowRight className="w-5 h-5" />
-                </button>
+                </Link>
 
                 {/* Free Shipping Notice */}
                 {subtotal < 999 && (

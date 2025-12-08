@@ -1,10 +1,11 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { ShoppingCart, Search, Menu, X, Zap, User, Heart } from 'lucide-react';
+import { ShoppingCart, Search, Menu, X, Zap, User, Heart, Package, Settings, LogOut, ChevronDown } from 'lucide-react';
 import { useCart } from '@/context/CartContext';
+import { useUser } from '@/context/UserContext';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export default function Header() {
@@ -13,8 +14,11 @@ export default function Header() {
   const [searchQuery, setSearchQuery] = useState('');
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isCartAnimating, setIsCartAnimating] = useState(false);
+  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+  const userMenuRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
   const { getCartCount, cartAnimationTrigger } = useCart();
+  const { user, isAuthenticated, logout } = useUser();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -34,6 +38,22 @@ export default function Header() {
       return () => clearTimeout(timer);
     }
   }, [cartAnimationTrigger]);
+
+  // Close user menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (userMenuRef.current && !userMenuRef.current.contains(event.target as Node)) {
+        setIsUserMenuOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  const handleLogout = () => {
+    logout();
+    setIsUserMenuOpen(false);
+  };
 
   const navLinks = [
     { href: '/', label: 'Home' },
@@ -136,9 +156,79 @@ export default function Header() {
             </button>
 
             {/* Account */}
-            <button className="hidden sm:flex p-2 text-carbon-300 hover:text-electric-400 transition-colors">
-              <User className="w-5 h-5" />
-            </button>
+            <div className="relative hidden sm:block" ref={userMenuRef}>
+              {isAuthenticated && user ? (
+                <>
+                  <button
+                    onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
+                    className="flex items-center gap-2 p-2 text-carbon-300 hover:text-electric-400 transition-colors"
+                  >
+                    <div className="w-8 h-8 rounded-full bg-gradient-to-br from-electric-500 to-volt-500 flex items-center justify-center text-white text-sm font-bold">
+                      {user.name.charAt(0).toUpperCase()}
+                    </div>
+                    <ChevronDown className={`w-4 h-4 transition-transform ${isUserMenuOpen ? 'rotate-180' : ''}`} />
+                  </button>
+
+                  {/* User Dropdown Menu */}
+                  <AnimatePresence>
+                    {isUserMenuOpen && (
+                      <motion.div
+                        initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                        exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                        transition={{ duration: 0.15 }}
+                        className="absolute right-0 mt-2 w-56 rounded-xl bg-carbon-900 border border-electric-500/20 shadow-xl shadow-black/50 overflow-hidden z-50"
+                      >
+                        {/* User Info */}
+                        <div className="px-4 py-3 border-b border-carbon-800">
+                          <p className="font-medium text-white truncate">{user.name}</p>
+                          <p className="text-sm text-carbon-500 truncate">{user.email}</p>
+                        </div>
+
+                        {/* Menu Items */}
+                        <div className="py-2">
+                          <Link
+                            href="/orders"
+                            onClick={() => setIsUserMenuOpen(false)}
+                            className="flex items-center gap-3 px-4 py-2.5 text-carbon-300 hover:bg-electric-500/10 hover:text-electric-400 transition-colors"
+                          >
+                            <Package className="w-4 h-4" />
+                            My Orders
+                          </Link>
+                          <Link
+                            href="/settings"
+                            onClick={() => setIsUserMenuOpen(false)}
+                            className="flex items-center gap-3 px-4 py-2.5 text-carbon-300 hover:bg-electric-500/10 hover:text-electric-400 transition-colors"
+                          >
+                            <Settings className="w-4 h-4" />
+                            Settings
+                          </Link>
+                        </div>
+
+                        {/* Logout */}
+                        <div className="border-t border-carbon-800 py-2">
+                          <button
+                            onClick={handleLogout}
+                            className="flex items-center gap-3 w-full px-4 py-2.5 text-red-400 hover:bg-red-500/10 transition-colors"
+                          >
+                            <LogOut className="w-4 h-4" />
+                            Logout
+                          </button>
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </>
+              ) : (
+                <Link
+                  href="/login"
+                  className="flex items-center gap-2 px-4 py-2 rounded-lg text-carbon-300 hover:text-electric-400 border border-electric-500/30 hover:border-electric-500 transition-colors"
+                >
+                  <User className="w-4 h-4" />
+                  <span className="text-sm font-medium">Login</span>
+                </Link>
+              )}
+            </div>
 
             {/* Cart */}
             <Link
@@ -268,16 +358,70 @@ export default function Header() {
               </div>
 
               <div className="mt-8 pt-8 border-t border-carbon-800">
-                <div className="flex gap-4">
-                  <button className="flex-1 flex items-center justify-center gap-2 py-3 rounded-lg bg-carbon-800 text-carbon-200">
-                    <User className="w-5 h-5" />
-                    Account
-                  </button>
-                  <button className="flex-1 flex items-center justify-center gap-2 py-3 rounded-lg bg-carbon-800 text-carbon-200">
-                    <Heart className="w-5 h-5" />
-                    Wishlist
-                  </button>
-                </div>
+                {isAuthenticated && user ? (
+                  <div className="space-y-4">
+                    {/* User Info */}
+                    <div className="flex items-center gap-4 p-4 rounded-xl bg-carbon-800/50">
+                      <div className="w-12 h-12 rounded-full bg-gradient-to-br from-electric-500 to-volt-500 flex items-center justify-center text-white text-lg font-bold">
+                        {user.name.charAt(0).toUpperCase()}
+                      </div>
+                      <div>
+                        <p className="font-medium text-white">{user.name}</p>
+                        <p className="text-sm text-carbon-500">{user.email}</p>
+                      </div>
+                    </div>
+
+                    {/* User Menu Links */}
+                    <div className="grid grid-cols-2 gap-3">
+                      <Link
+                        href="/orders"
+                        onClick={() => setIsMobileMenuOpen(false)}
+                        className="flex items-center justify-center gap-2 py-3 rounded-lg bg-carbon-800 text-carbon-200 hover:bg-electric-500/20 hover:text-electric-400 transition-colors"
+                      >
+                        <Package className="w-5 h-5" />
+                        Orders
+                      </Link>
+                      <Link
+                        href="/settings"
+                        onClick={() => setIsMobileMenuOpen(false)}
+                        className="flex items-center justify-center gap-2 py-3 rounded-lg bg-carbon-800 text-carbon-200 hover:bg-electric-500/20 hover:text-electric-400 transition-colors"
+                      >
+                        <Settings className="w-5 h-5" />
+                        Settings
+                      </Link>
+                    </div>
+
+                    {/* Logout */}
+                    <button
+                      onClick={() => {
+                        handleLogout();
+                        setIsMobileMenuOpen(false);
+                      }}
+                      className="w-full flex items-center justify-center gap-2 py-3 rounded-lg bg-red-500/10 text-red-400 hover:bg-red-500/20 transition-colors"
+                    >
+                      <LogOut className="w-5 h-5" />
+                      Logout
+                    </button>
+                  </div>
+                ) : (
+                  <div className="flex gap-4">
+                    <Link
+                      href="/login"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className="flex-1 flex items-center justify-center gap-2 py-3 rounded-lg bg-electric-500 text-white font-medium"
+                    >
+                      <User className="w-5 h-5" />
+                      Login
+                    </Link>
+                    <Link
+                      href="/signup"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className="flex-1 flex items-center justify-center gap-2 py-3 rounded-lg border border-electric-500/50 text-electric-400"
+                    >
+                      Sign Up
+                    </Link>
+                  </div>
+                )}
               </div>
 
               <div className="mt-8 p-4 rounded-xl bg-gradient-to-r from-electric-600/20 to-volt-500/20 border border-electric-500/20">

@@ -3,6 +3,7 @@ import './globals.css';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { CartProvider } from '@/context/CartContext';
+import { UserProvider } from '@/context/UserContext';
 
 export const metadata: Metadata = {
   title: 'Balaji Electricals | Premium Electrical Products',
@@ -18,19 +19,21 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="font-body antialiased">
-        <CartProvider>
-          {/* Animated Background */}
-          <div className="animated-bg" />
-          
-          {/* Main Content */}
-          <div className="relative min-h-screen flex flex-col">
-            <Header />
-            <main className="flex-1 pt-24 lg:pt-32">
-              {children}
-            </main>
-            <Footer />
-          </div>
-        </CartProvider>
+        <UserProvider>
+          <CartProvider>
+            {/* Animated Background */}
+            <div className="animated-bg" />
+            
+            {/* Main Content */}
+            <div className="relative min-h-screen flex flex-col">
+              <Header />
+              <main className="flex-1 pt-24 lg:pt-32">
+                {children}
+              </main>
+              <Footer />
+            </div>
+          </CartProvider>
+        </UserProvider>
       </body>
     </html>
   );

@@ -147,10 +147,26 @@ body {
 
 /* Input Styles */
 .input-electric {
-  @apply w-full px-4 py-3 rounded-lg transition-all duration-300 outline-none;
+  @apply w-full py-3 rounded-lg transition-all duration-300 outline-none;
+  padding-left: 1rem;
+  padding-right: 1rem;
   background: rgba(15, 23, 42, 0.8);
   border: 1px solid rgba(14, 165, 233, 0.3);
   color: #f1f5f9;
+}
+
+/* Input with icon - use these classes for inputs with icons */
+.input-with-icon-left {
+  padding-left: 3rem !important;
+}
+
+.input-with-icon-right {
+  padding-right: 3rem !important;
+}
+
+.input-with-icon-both {
+  padding-left: 3rem !important;
+  padding-right: 3rem !important;
 }
 
 .input-electric:focus {
