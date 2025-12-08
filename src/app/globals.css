@@ -1,0 +1,388 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --electric-primary: #0ea5e9;
+  --electric-secondary: #38bdf8;
+  --electric-glow: rgba(14, 165, 233, 0.5);
+  --volt-primary: #facc15;
+  --spark-primary: #f97316;
+  --carbon-dark: #0f172a;
+  --carbon-darker: #020617;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Rajdhani', sans-serif;
+  background: linear-gradient(135deg, #020617 0%, #0f172a 50%, #082f49 100%);
+  color: #f1f5f9;
+  min-height: 100vh;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0f172a;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #0ea5e9, #0369a1);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #38bdf8, #0ea5e9);
+}
+
+/* Electric Glow Effects */
+.glow-text {
+  text-shadow: 0 0 10px var(--electric-glow), 0 0 20px var(--electric-glow), 0 0 30px var(--electric-glow);
+}
+
+.glow-box {
+  box-shadow: 0 0 15px var(--electric-glow), 0 0 30px rgba(14, 165, 233, 0.3);
+}
+
+.glow-border {
+  border: 1px solid var(--electric-primary);
+  box-shadow: 0 0 10px var(--electric-glow), inset 0 0 10px rgba(14, 165, 233, 0.1);
+}
+
+/* Electric Line Animation */
+.electric-line {
+  position: relative;
+  overflow: hidden;
+}
+
+.electric-line::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--electric-primary), transparent);
+  animation: electricFlow 2s infinite;
+}
+
+@keyframes electricFlow {
+  0% { left: -100%; }
+  100% { left: 100%; }
+}
+
+/* Circuit Background Pattern */
+.circuit-bg {
+  background-image: 
+    linear-gradient(135deg, rgba(14, 165, 233, 0.03) 1px, transparent 1px),
+    linear-gradient(225deg, rgba(14, 165, 233, 0.03) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+/* Button Styles */
+.btn-electric {
+  @apply relative overflow-hidden px-6 py-3 font-semibold text-white rounded-lg transition-all duration-300;
+  background: linear-gradient(135deg, #0ea5e9 0%, #0369a1 100%);
+  box-shadow: 0 4px 15px rgba(14, 165, 233, 0.4);
+}
+
+.btn-electric:hover {
+  box-shadow: 0 6px 25px rgba(14, 165, 233, 0.6);
+  transform: translateY(-2px);
+}
+
+.btn-electric::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.btn-electric:hover::before {
+  left: 100%;
+}
+
+.btn-outline-electric {
+  @apply px-6 py-3 font-semibold rounded-lg transition-all duration-300;
+  border: 2px solid var(--electric-primary);
+  color: var(--electric-primary);
+  background: transparent;
+}
+
+.btn-outline-electric:hover {
+  background: var(--electric-primary);
+  color: white;
+  box-shadow: 0 0 20px var(--electric-glow);
+}
+
+/* Card Styles */
+.card-electric {
+  @apply rounded-xl p-6 transition-all duration-300;
+  background: linear-gradient(135deg, rgba(30, 41, 59, 0.8) 0%, rgba(15, 23, 42, 0.9) 100%);
+  border: 1px solid rgba(14, 165, 233, 0.2);
+  backdrop-filter: blur(10px);
+}
+
+.card-electric:hover {
+  border-color: var(--electric-primary);
+  box-shadow: 0 10px 40px rgba(14, 165, 233, 0.2);
+  transform: translateY(-5px);
+}
+
+/* Input Styles */
+.input-electric {
+  @apply w-full px-4 py-3 rounded-lg transition-all duration-300 outline-none;
+  background: rgba(15, 23, 42, 0.8);
+  border: 1px solid rgba(14, 165, 233, 0.3);
+  color: #f1f5f9;
+}
+
+.input-electric:focus {
+  border-color: var(--electric-primary);
+  box-shadow: 0 0 15px var(--electric-glow);
+}
+
+.input-electric::placeholder {
+  color: #64748b;
+}
+
+/* Badge Styles */
+.badge-electric {
+  @apply px-3 py-1 text-xs font-semibold rounded-full;
+  background: linear-gradient(135deg, var(--electric-primary), #0369a1);
+  color: white;
+}
+
+.badge-volt {
+  @apply px-3 py-1 text-xs font-semibold rounded-full;
+  background: linear-gradient(135deg, var(--volt-primary), #ca8a04);
+  color: #0f172a;
+}
+
+.badge-spark {
+  @apply px-3 py-1 text-xs font-semibold rounded-full;
+  background: linear-gradient(135deg, var(--spark-primary), #c2410c);
+  color: white;
+}
+
+/* Animated Background */
+.animated-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: -1;
+  overflow: hidden;
+}
+
+.animated-bg::before {
+  content: '';
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(14, 165, 233, 0.15) 0%, transparent 70%);
+  top: 20%;
+  left: 10%;
+  animation: float 8s ease-in-out infinite;
+}
+
+.animated-bg::after {
+  content: '';
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(250, 204, 21, 0.1) 0%, transparent 70%);
+  bottom: 20%;
+  right: 10%;
+  animation: float 10s ease-in-out infinite reverse;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-30px) rotate(5deg); }
+}
+
+/* Price Tag Style */
+.price-tag {
+  @apply text-2xl font-bold;
+  background: linear-gradient(135deg, var(--volt-primary), var(--spark-primary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Product Image Hover Effect */
+.product-image-container {
+  @apply relative overflow-hidden rounded-lg;
+}
+
+.product-image-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(14, 165, 233, 0) 0%, rgba(14, 165, 233, 0.3) 100%);
+  opacity: 0;
+  transition: opacity 0.3s;
+  z-index: 1;
+}
+
+.product-image-container:hover::before {
+  opacity: 1;
+}
+
+/* Quantity Selector */
+.quantity-btn {
+  @apply w-10 h-10 flex items-center justify-center rounded-lg font-bold transition-all duration-200;
+  background: rgba(14, 165, 233, 0.2);
+  border: 1px solid rgba(14, 165, 233, 0.3);
+  color: var(--electric-primary);
+}
+
+.quantity-btn:hover {
+  background: var(--electric-primary);
+  color: white;
+}
+
+/* Loading Spinner */
+.spinner-electric {
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(14, 165, 233, 0.2);
+  border-top-color: var(--electric-primary);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Navigation Active Link */
+.nav-link {
+  @apply relative px-4 py-2 font-medium transition-all duration-300;
+  color: #94a3b8;
+}
+
+.nav-link:hover, .nav-link.active {
+  color: var(--electric-primary);
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: var(--electric-primary);
+  transition: all 0.3s;
+  transform: translateX(-50%);
+}
+
+.nav-link:hover::after, .nav-link.active::after {
+  width: 80%;
+}
+
+/* Responsive Grid */
+.product-grid {
+  @apply grid gap-6;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+}
+
+/* Star Rating */
+.star-rating {
+  color: var(--volt-primary);
+}
+
+/* Category Card */
+.category-card {
+  @apply relative overflow-hidden rounded-2xl p-6 cursor-pointer transition-all duration-500;
+  background: linear-gradient(135deg, rgba(30, 41, 59, 0.6) 0%, rgba(15, 23, 42, 0.8) 100%);
+  border: 1px solid rgba(14, 165, 233, 0.1);
+  height: 100%;
+}
+
+.category-card:hover {
+  border-color: var(--electric-primary);
+  transform: translateY(-4px);
+  box-shadow: 0 20px 60px rgba(14, 165, 233, 0.2);
+}
+
+.category-card::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(14, 165, 233, 0.1) 0%, transparent 60%);
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+
+.category-card:hover::before {
+  opacity: 1;
+}
+
+/* Checkout Progress */
+.checkout-step {
+  @apply flex items-center justify-center w-10 h-10 rounded-full font-bold text-sm;
+  background: rgba(14, 165, 233, 0.2);
+  color: #64748b;
+  border: 2px solid rgba(14, 165, 233, 0.3);
+}
+
+.checkout-step.active {
+  background: var(--electric-primary);
+  color: white;
+  border-color: var(--electric-primary);
+  box-shadow: 0 0 20px var(--electric-glow);
+}
+
+.checkout-step.completed {
+  background: #10b981;
+  color: white;
+  border-color: #10b981;
+}
+
+/* Toast Notification */
+.toast-electric {
+  @apply fixed bottom-6 right-6 px-6 py-4 rounded-lg z-50;
+  background: linear-gradient(135deg, rgba(30, 41, 59, 0.95) 0%, rgba(15, 23, 42, 0.98) 100%);
+  border: 1px solid var(--electric-primary);
+  box-shadow: 0 10px 40px rgba(14, 165, 233, 0.3);
+  animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
