@@ -19,12 +19,11 @@ import {
 } from 'lucide-react';
 import { useUser, Order } from '@/context/UserContext';
 
-const statusConfig = {
-  pending: { label: 'Pending', color: 'text-yellow-400', bg: 'bg-yellow-500/10', icon: Clock },
-  confirmed: { label: 'Confirmed', color: 'text-blue-400', bg: 'bg-blue-500/10', icon: CheckCircle },
-  shipped: { label: 'Shipped', color: 'text-purple-400', bg: 'bg-purple-500/10', icon: Truck },
-  delivered: { label: 'Delivered', color: 'text-green-400', bg: 'bg-green-500/10', icon: CheckCircle },
-  cancelled: { label: 'Cancelled', color: 'text-red-400', bg: 'bg-red-500/10', icon: XCircle },
+const statusConfig: Record<string, { label: string; color: string; bg: string; icon: React.ElementType }> = {
+  Processing: { label: 'Processing', color: 'text-yellow-400', bg: 'bg-yellow-500/10', icon: Clock },
+  Shipped: { label: 'Shipped', color: 'text-blue-400', bg: 'bg-blue-500/10', icon: Truck },
+  Delivered: { label: 'Delivered', color: 'text-green-400', bg: 'bg-green-500/10', icon: CheckCircle },
+  Cancelled: { label: 'Cancelled', color: 'text-red-400', bg: 'bg-red-500/10', icon: XCircle },
 };
 
 function OrderCard({ order }: { order: Order }) {
@@ -120,7 +119,7 @@ function OrderCard({ order }: { order: Order }) {
           >
             View Details
           </Link>
-          {order.status === 'delivered' && (
+          {order.status === 'Delivered' && (
             <button className="px-4 py-2 rounded-lg text-sm font-medium bg-electric-500/20 text-electric-400 hover:bg-electric-500/30 transition-colors">
               Buy Again
             </button>

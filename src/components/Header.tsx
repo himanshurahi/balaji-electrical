@@ -83,6 +83,7 @@ export default function Header() {
   };
 
   return (
+    <>
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled
@@ -335,15 +336,18 @@ export default function Header() {
           </motion.div>
         )}
       </AnimatePresence>
+    </header>
 
-      {/* Mobile Menu */}
-      <AnimatePresence>
+    {/* Mobile Menu - Outside header to avoid stacking context issues */}
+    <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            className="lg:hidden fixed inset-0 top-16 bg-carbon-950 z-40 overflow-y-auto"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="lg:hidden fixed left-0 right-0 bottom-0 bg-carbon-950 z-[60] overflow-y-auto"
+            style={{ top: '64px' }}
           >
             <nav className="container mx-auto px-4 py-8 pb-24">
               <div className="flex flex-col gap-2">
@@ -445,7 +449,7 @@ export default function Header() {
           </motion.div>
         )}
       </AnimatePresence>
-    </header>
+    </>
   );
 }
 

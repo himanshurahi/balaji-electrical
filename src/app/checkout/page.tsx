@@ -21,6 +21,9 @@ import {
   Loader2,
   ShoppingBag,
   ArrowRight,
+  Smartphone,
+  Landmark,
+  Banknote,
 } from 'lucide-react';
 import { useCart } from '@/context/CartContext';
 import { useUser, Address } from '@/context/UserContext';
@@ -91,10 +94,10 @@ export default function CheckoutPage() {
   const total = subtotal + shipping + tax;
 
   const paymentMethods = [
-    { id: 'upi', label: 'UPI', desc: 'Pay using any UPI app', icon: '📱' },
-    { id: 'card', label: 'Credit/Debit Card', desc: 'Visa, Mastercard, RuPay', icon: '💳' },
-    { id: 'netbanking', label: 'Net Banking', desc: 'All major banks supported', icon: '🏦' },
-    { id: 'cod', label: 'Cash on Delivery', desc: 'Pay when you receive', icon: '💵' },
+    { id: 'upi', label: 'UPI', desc: 'Pay using any UPI app', icon: Smartphone },
+    { id: 'card', label: 'Credit/Debit Card', desc: 'Visa, Mastercard, RuPay', icon: CreditCard },
+    { id: 'netbanking', label: 'Net Banking', desc: 'All major banks supported', icon: Landmark },
+    { id: 'cod', label: 'Cash on Delivery', desc: 'Pay when you receive', icon: Banknote },
   ];
 
   const handleAddAddress = (values: Omit<Address, 'id'>) => {
@@ -351,14 +354,14 @@ export default function CheckoutPage() {
                             >
                               {({ errors, touched }) => (
                                 <Form className="space-y-4">
-                                  <div className="grid grid-cols-2 gap-4">
+                                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                     <div>
                                       <label className="block text-sm text-carbon-300 mb-1">
                                         Label
                                       </label>
                                       <Field
                                         name="name"
-                                        className={`input-electric ${errors.name && touched.name ? 'border-red-500' : ''}`}
+                                        className={`input-electric px-4 ${errors.name && touched.name ? 'border-red-500' : ''}`}
                                         placeholder="Home"
                                       />
                                       <ErrorMessage name="name" component="p" className="mt-1 text-xs text-red-400" />
@@ -369,7 +372,7 @@ export default function CheckoutPage() {
                                       </label>
                                       <Field
                                         name="phone"
-                                        className={`input-electric ${errors.phone && touched.phone ? 'border-red-500' : ''}`}
+                                        className={`input-electric px-4 ${errors.phone && touched.phone ? 'border-red-500' : ''}`}
                                         placeholder="+91 98765 43210"
                                       />
                                       <ErrorMessage name="phone" component="p" className="mt-1 text-xs text-red-400" />
@@ -382,18 +385,18 @@ export default function CheckoutPage() {
                                     </label>
                                     <Field
                                       name="street"
-                                      className={`input-electric ${errors.street && touched.street ? 'border-red-500' : ''}`}
+                                      className={`input-electric px-4 ${errors.street && touched.street ? 'border-red-500' : ''}`}
                                       placeholder="123 Electric Avenue"
                                     />
                                     <ErrorMessage name="street" component="p" className="mt-1 text-xs text-red-400" />
                                   </div>
 
-                                  <div className="grid grid-cols-3 gap-4">
+                                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                                     <div>
                                       <label className="block text-sm text-carbon-300 mb-1">City</label>
                                       <Field
                                         name="city"
-                                        className={`input-electric ${errors.city && touched.city ? 'border-red-500' : ''}`}
+                                        className={`input-electric px-4 ${errors.city && touched.city ? 'border-red-500' : ''}`}
                                         placeholder="Mumbai"
                                       />
                                       <ErrorMessage name="city" component="p" className="mt-1 text-xs text-red-400" />
@@ -402,7 +405,7 @@ export default function CheckoutPage() {
                                       <label className="block text-sm text-carbon-300 mb-1">State</label>
                                       <Field
                                         name="state"
-                                        className={`input-electric ${errors.state && touched.state ? 'border-red-500' : ''}`}
+                                        className={`input-electric px-4 ${errors.state && touched.state ? 'border-red-500' : ''}`}
                                         placeholder="Maharashtra"
                                       />
                                       <ErrorMessage name="state" component="p" className="mt-1 text-xs text-red-400" />
@@ -411,7 +414,7 @@ export default function CheckoutPage() {
                                       <label className="block text-sm text-carbon-300 mb-1">Pincode</label>
                                       <Field
                                         name="pincode"
-                                        className={`input-electric ${errors.pincode && touched.pincode ? 'border-red-500' : ''}`}
+                                        className={`input-electric px-4 ${errors.pincode && touched.pincode ? 'border-red-500' : ''}`}
                                         placeholder="400001"
                                       />
                                       <ErrorMessage name="pincode" component="p" className="mt-1 text-xs text-red-400" />
@@ -485,7 +488,9 @@ export default function CheckoutPage() {
                               onChange={(e) => setSelectedPayment(e.target.value)}
                               className="w-5 h-5 accent-electric-500"
                             />
-                            <span className="text-2xl">{method.icon}</span>
+                            <div className="w-10 h-10 rounded-lg bg-electric-500/10 flex items-center justify-center">
+                              <method.icon className="w-5 h-5 text-electric-400" />
+                            </div>
                             <div className="flex-1">
                               <p className="font-semibold text-white">{method.label}</p>
                               <p className="text-sm text-carbon-400">{method.desc}</p>
@@ -506,16 +511,16 @@ export default function CheckoutPage() {
                           <label className="block text-sm text-carbon-300 mb-1">Card Number</label>
                           <input
                             type="text"
-                            className="input-electric"
+                            className="input-electric px-4"
                             placeholder="1234 5678 9012 3456"
                           />
                         </div>
-                        <div className="grid grid-cols-2 gap-4">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                           <div>
                             <label className="block text-sm text-carbon-300 mb-1">Expiry</label>
                             <input
                               type="text"
-                              className="input-electric"
+                              className="input-electric px-4"
                               placeholder="MM/YY"
                             />
                           </div>
@@ -523,7 +528,7 @@ export default function CheckoutPage() {
                             <label className="block text-sm text-carbon-300 mb-1">CVV</label>
                             <input
                               type="text"
-                              className="input-electric"
+                              className="input-electric px-4"
                               placeholder="123"
                             />
                           </div>
@@ -541,17 +546,17 @@ export default function CheckoutPage() {
                         <label className="block text-sm text-carbon-300 mb-1">UPI ID</label>
                         <input
                           type="text"
-                          className="input-electric"
+                          className="input-electric px-4"
                           placeholder="yourname@upi"
                         />
                       </motion.div>
                     )}
 
                     {/* Navigation Buttons */}
-                    <div className="mt-8 flex justify-between">
+                    <div className="mt-8 flex flex-col sm:flex-row gap-4 sm:justify-between">
                       <button
                         onClick={prevStep}
-                        className="flex items-center gap-2 px-6 py-3 rounded-lg border border-carbon-700 text-carbon-300 hover:bg-carbon-800 transition-colors"
+                        className="flex items-center justify-center gap-2 px-6 py-3 rounded-lg border border-carbon-700 text-carbon-300 hover:bg-carbon-800 transition-colors order-2 sm:order-1"
                       >
                         <ChevronLeft className="w-5 h-5" />
                         Back
@@ -559,7 +564,7 @@ export default function CheckoutPage() {
                       <button
                         onClick={nextStep}
                         disabled={!selectedPayment}
-                        className="btn-electric flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="btn-electric flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed order-1 sm:order-2"
                       >
                         Review Order
                         <ChevronRight className="w-5 h-5" />
@@ -615,10 +620,23 @@ export default function CheckoutPage() {
                           Change
                         </button>
                       </div>
-                      <p className="text-carbon-300">
-                        {paymentMethods.find(m => m.id === selectedPayment)?.icon}{' '}
-                        {paymentMethods.find(m => m.id === selectedPayment)?.label}
-                      </p>
+                      <div className="flex items-center gap-3 text-carbon-300">
+                        {(() => {
+                          const method = paymentMethods.find(m => m.id === selectedPayment);
+                          if (method) {
+                            const IconComponent = method.icon;
+                            return (
+                              <>
+                                <div className="w-8 h-8 rounded-lg bg-electric-500/10 flex items-center justify-center">
+                                  <IconComponent className="w-4 h-4 text-electric-400" />
+                                </div>
+                                <span>{method.label}</span>
+                              </>
+                            );
+                          }
+                          return null;
+                        })()}
+                      </div>
                     </div>
 
                     {/* Order Items */}
@@ -628,8 +646,8 @@ export default function CheckoutPage() {
                       </h3>
                       <div className="space-y-4">
                         {items.map((item) => (
-                          <div key={item.id} className="flex items-center gap-4">
-                            <div className="w-16 h-16 rounded-lg overflow-hidden bg-carbon-800">
+                          <div key={item.id} className="flex items-start gap-3 sm:gap-4 p-3 sm:p-0 rounded-lg bg-carbon-800/30 sm:bg-transparent">
+                            <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-lg overflow-hidden bg-carbon-800 flex-shrink-0">
                               <Image
                                 src={item.image}
                                 alt={item.name}
@@ -639,12 +657,15 @@ export default function CheckoutPage() {
                               />
                             </div>
                             <div className="flex-1 min-w-0">
-                              <h4 className="font-medium text-white truncate">{item.name}</h4>
-                              <p className="text-sm text-carbon-400">
+                              <h4 className="font-medium text-white text-sm sm:text-base line-clamp-2 sm:truncate">{item.name}</h4>
+                              <p className="text-xs sm:text-sm text-carbon-400 mt-1">
                                 Qty: {item.quantity} × {formatPrice(item.price)}
                               </p>
+                              <p className="font-medium text-white text-sm sm:hidden mt-1">
+                                {formatPrice(item.price * item.quantity)}
+                              </p>
                             </div>
-                            <p className="font-medium text-white">
+                            <p className="hidden sm:block font-medium text-white flex-shrink-0">
                               {formatPrice(item.price * item.quantity)}
                             </p>
                           </div>
@@ -653,10 +674,10 @@ export default function CheckoutPage() {
                     </div>
 
                     {/* Navigation Buttons */}
-                    <div className="flex justify-between">
+                    <div className="flex flex-col sm:flex-row gap-4 sm:justify-between">
                       <button
                         onClick={prevStep}
-                        className="flex items-center gap-2 px-6 py-3 rounded-lg border border-carbon-700 text-carbon-300 hover:bg-carbon-800 transition-colors"
+                        className="flex items-center justify-center gap-2 px-6 py-3 rounded-lg border border-carbon-700 text-carbon-300 hover:bg-carbon-800 transition-colors order-2 sm:order-1"
                       >
                         <ChevronLeft className="w-5 h-5" />
                         Back
@@ -664,7 +685,7 @@ export default function CheckoutPage() {
                       <button
                         onClick={handlePlaceOrder}
                         disabled={isProcessing}
-                        className="btn-electric flex items-center gap-2 px-8 disabled:opacity-50"
+                        className="btn-electric flex items-center justify-center gap-2 px-6 sm:px-8 disabled:opacity-50 order-1 sm:order-2"
                       >
                         {isProcessing ? (
                           <>
@@ -674,7 +695,7 @@ export default function CheckoutPage() {
                         ) : (
                           <>
                             <Lock className="w-5 h-5" />
-                            Place Order • {formatPrice(total)}
+                            <span className="whitespace-nowrap">Place Order • {formatPrice(total)}</span>
                           </>
                         )}
                       </button>

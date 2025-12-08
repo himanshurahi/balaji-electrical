@@ -59,37 +59,37 @@ function OrderConfirmationContent() {
   ];
 
   return (
-    <div className="min-h-screen relative">
+    <div className="min-h-screen relative overflow-x-hidden">
       {/* Confetti Animation */}
       {showConfetti && <Confetti />}
 
       {/* Success Hero */}
-      <section className="py-12 lg:py-20 text-center relative overflow-hidden">
+      <section className="py-12 lg:py-20 text-center relative overflow-hidden min-h-[400px] flex items-center">
         {/* Background Effects */}
         <div className="absolute inset-0 -z-10">
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-green-500/10 rounded-full blur-[128px]" />
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-green-500/10 rounded-full blur-[128px]" 
+          />
         </div>
 
-        <div className="container mx-auto px-4 lg:px-6">
-          <motion.div
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            transition={{ type: 'spring', duration: 0.8 }}
-            className="w-24 h-24 mx-auto mb-8 rounded-full bg-green-500/20 flex items-center justify-center"
-          >
+        <div className="container mx-auto px-4 lg:px-6 w-full">
+          <div className="w-24 h-24 mx-auto mb-8 rounded-full bg-green-500/20 flex items-center justify-center">
             <motion.div
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              transition={{ delay: 0.3, type: 'spring' }}
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ duration: 0.4, ease: "easeOut" }}
             >
               <CheckCircle className="w-14 h-14 text-green-500" />
             </motion.div>
-          </motion.div>
+          </div>
 
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.2, duration: 0.4 }}
           >
             <h1 className="font-display text-3xl lg:text-5xl font-bold text-white mb-4">
               Order <span className="text-green-400">Confirmed!</span>
@@ -104,9 +104,9 @@ function OrderConfirmationContent() {
 
           {/* Quick Actions */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.6 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.4, duration: 0.4 }}
             className="flex flex-wrap justify-center gap-4 mt-8"
           >
             <button className="flex items-center gap-2 px-6 py-3 rounded-xl bg-carbon-800/50 border border-carbon-700 text-carbon-300 hover:border-electric-500 hover:text-electric-400 transition-all">
@@ -124,9 +124,9 @@ function OrderConfirmationContent() {
             <div className="grid md:grid-cols-2 gap-6">
               {/* Order Info Card */}
               <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.5 }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.3, duration: 0.4 }}
                 className="card-electric"
               >
                 <h3 className="font-display text-lg font-bold text-white mb-6">
@@ -166,9 +166,9 @@ function OrderConfirmationContent() {
 
               {/* Delivery Info Card */}
               <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.6 }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.4, duration: 0.4 }}
                 className="card-electric"
               >
                 <h3 className="font-display text-lg font-bold text-white mb-6">
@@ -203,9 +203,9 @@ function OrderConfirmationContent() {
 
             {/* Order Timeline */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.7 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.5, duration: 0.4 }}
               className="card-electric mt-6"
             >
               <h3 className="font-display text-lg font-bold text-white mb-6">
@@ -253,9 +253,9 @@ function OrderConfirmationContent() {
 
             {/* What's Next */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.8 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.6, duration: 0.4 }}
               className="mt-8 p-6 rounded-2xl bg-gradient-to-r from-electric-500/10 to-volt-500/10 border border-electric-500/20"
             >
               <h3 className="font-display text-lg font-bold text-white mb-4">
@@ -279,9 +279,9 @@ function OrderConfirmationContent() {
 
             {/* Action Buttons */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.9 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.7, duration: 0.4 }}
               className="flex flex-col sm:flex-row gap-4 justify-center mt-10"
             >
               <Link

@@ -27,8 +27,11 @@ export interface Order {
   id: string;
   orderNumber: string;
   items: OrderItem[];
+  subtotal: number;
+  shipping: number;
+  tax: number;
   total: number;
-  status: 'pending' | 'confirmed' | 'shipped' | 'delivered' | 'cancelled';
+  status: 'Processing' | 'Shipped' | 'Delivered' | 'Cancelled';
   paymentMethod: string;
   shippingAddress: Address;
   createdAt: string;
@@ -69,8 +72,11 @@ const sampleOrders: Order[] = [
       { id: 1, name: 'Philips 12W LED Bulb Pack of 4', price: 599, quantity: 2, image: 'https://images.unsplash.com/photo-1565814329452-e1efa11c5b89?w=100' },
       { id: 2, name: 'Havells 1200mm Ceiling Fan', price: 2499, quantity: 1, image: 'https://images.unsplash.com/photo-1635048424329-a9bfb146d7aa?w=100' },
     ],
-    total: 3697,
-    status: 'delivered',
+    subtotal: 3697,
+    shipping: 0,
+    tax: 665,
+    total: 4362,
+    status: 'Delivered',
     paymentMethod: 'UPI',
     shippingAddress: {
       id: '1',
@@ -91,9 +97,12 @@ const sampleOrders: Order[] = [
     items: [
       { id: 5, name: 'Crompton Digital Multimeter', price: 1599, quantity: 1, image: 'https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=100' },
     ],
-    total: 1599,
-    status: 'shipped',
-    paymentMethod: 'Card',
+    subtotal: 1599,
+    shipping: 0,
+    tax: 288,
+    total: 1887,
+    status: 'Shipped',
+    paymentMethod: 'Credit/Debit Card',
     shippingAddress: {
       id: '1',
       name: 'Home',
@@ -114,9 +123,12 @@ const sampleOrders: Order[] = [
       { id: 4, name: 'Finolex FR Cable 2.5 sqmm (90m)', price: 4299, quantity: 1, image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=100' },
       { id: 3, name: 'Anchor Roma 10A Switch Set', price: 849, quantity: 3, image: 'https://images.unsplash.com/photo-1558089687-f282ffcbc126?w=100' },
     ],
-    total: 6846,
-    status: 'confirmed',
-    paymentMethod: 'COD',
+    subtotal: 6846,
+    shipping: 0,
+    tax: 1232,
+    total: 8078,
+    status: 'Processing',
+    paymentMethod: 'Cash on Delivery',
     shippingAddress: {
       id: '2',
       name: 'Office',
