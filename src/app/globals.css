@@ -93,7 +93,7 @@ body {
 
 /* Button Styles */
 .btn-electric {
-  @apply relative overflow-hidden px-6 py-3 font-semibold text-white rounded-lg transition-all duration-300;
+  @apply relative overflow-hidden px-6 py-3 font-semibold text-white rounded-lg;
   background: linear-gradient(135deg, #0ea5e9 0%, #0369a1 100%);
   box-shadow: 0 4px 15px rgba(14, 165, 233, 0.4);
 }
@@ -119,7 +119,7 @@ body {
 }
 
 .btn-outline-electric {
-  @apply px-6 py-3 font-semibold rounded-lg transition-all duration-300;
+  @apply px-6 py-3 font-semibold rounded-lg;
   border: 2px solid var(--electric-primary);
   color: var(--electric-primary);
   background: transparent;
@@ -133,21 +133,19 @@ body {
 
 /* Card Styles */
 .card-electric {
-  @apply rounded-xl p-6 transition-all duration-300;
+  @apply rounded-xl p-6;
   background: linear-gradient(135deg, rgba(30, 41, 59, 0.8) 0%, rgba(15, 23, 42, 0.9) 100%);
   border: 1px solid rgba(14, 165, 233, 0.2);
-  backdrop-filter: blur(10px);
 }
 
 .card-electric:hover {
   border-color: var(--electric-primary);
   box-shadow: 0 10px 40px rgba(14, 165, 233, 0.2);
-  transform: translateY(-5px);
 }
 
 /* Input Styles */
 .input-electric {
-  @apply w-full py-3 rounded-lg transition-all duration-300 outline-none;
+  @apply w-full py-3 rounded-lg outline-none;
   padding-left: 1rem;
   padding-right: 1rem;
   background: rgba(15, 23, 42, 0.8);
@@ -269,7 +267,7 @@ body {
 
 /* Quantity Selector */
 .quantity-btn {
-  @apply w-10 h-10 flex items-center justify-center rounded-lg font-bold transition-all duration-200;
+  @apply w-10 h-10 flex items-center justify-center rounded-lg font-bold;
   background: rgba(14, 165, 233, 0.2);
   border: 1px solid rgba(14, 165, 233, 0.3);
   color: var(--electric-primary);
@@ -296,7 +294,7 @@ body {
 
 /* Navigation Active Link */
 .nav-link {
-  @apply relative px-4 py-2 font-medium transition-all duration-300;
+  @apply relative px-4 py-2 font-medium;
   color: #94a3b8;
 }
 
@@ -333,7 +331,7 @@ body {
 
 /* Category Card */
 .category-card {
-  @apply relative overflow-hidden rounded-2xl p-6 cursor-pointer transition-all duration-500;
+  @apply relative overflow-hidden rounded-2xl p-6 cursor-pointer;
   background: linear-gradient(135deg, rgba(30, 41, 59, 0.6) 0%, rgba(15, 23, 42, 0.8) 100%);
   border: 1px solid rgba(14, 165, 233, 0.1);
   height: 100%;
@@ -341,7 +339,6 @@ body {
 
 .category-card:hover {
   border-color: var(--electric-primary);
-  transform: translateY(-4px);
   box-shadow: 0 20px 60px rgba(14, 165, 233, 0.2);
 }
 
@@ -354,7 +351,6 @@ body {
   height: 200%;
   background: radial-gradient(circle, rgba(14, 165, 233, 0.1) 0%, transparent 60%);
   opacity: 0;
-  transition: opacity 0.5s;
 }
 
 .category-card:hover::before {
