@@ -154,7 +154,7 @@ export default function HomePage() {
                       ].map((item, index) => (
                         <motion.div
                           key={index}
-                          className={`absolute ${item.pos} w-28 h-28 rounded-xl overflow-hidden border-2 border-electric-500/50 shadow-lg shadow-electric-500/20`}
+                          className={`absolute ${item.pos} w-28 h-28 rounded-xl overflow-hidden border-2 border-electric-500/50 shadow-lg shadow-electric-500/20 product-thumbnail`}
                           animate={{ y: [0, -15, 0] }}
                           transition={{ duration: 3, delay: parseFloat(item.delay), repeat: Infinity }}
                         >

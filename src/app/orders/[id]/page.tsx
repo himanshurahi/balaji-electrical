@@ -45,17 +45,17 @@ const statusColors: Record<string, { bg: string; text: string; icon: React.Eleme
 export default function OrderDetailsPage() {
   const params = useParams();
   const router = useRouter();
-  const { orders, isAuthenticated, isLoading } = useUser();
+  const { orders, isAuthenticated, isInitializing } = useUser();
   const [order, setOrder] = useState<Order | null>(null);
   const [copied, setCopied] = useState(false);
 
   const orderId = params.id as string;
 
   useEffect(() => {
-    if (!isLoading && !isAuthenticated) {
+    if (!isInitializing && !isAuthenticated) {
       router.push('/login?redirect=/orders');
     }
-  }, [isAuthenticated, isLoading, router]);
+  }, [isAuthenticated, isInitializing, router]);
 
   useEffect(() => {
     if (orders.length > 0) {
@@ -122,7 +122,7 @@ export default function OrderDetailsPage() {
     }));
   };
 
-  if (isLoading) {
+  if (isInitializing) {
     return (
       <div className="min-h-[60vh] flex items-center justify-center">
         <div className="spinner-electric" />

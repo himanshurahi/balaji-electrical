@@ -132,15 +132,15 @@ function OrderCard({ order }: { order: Order }) {
 
 export default function OrdersPage() {
   const router = useRouter();
-  const { isAuthenticated, isLoading, orders } = useUser();
+  const { isAuthenticated, isInitializing, orders } = useUser();
 
   useEffect(() => {
-    if (!isLoading && !isAuthenticated) {
+    if (!isInitializing && !isAuthenticated) {
       router.push('/login');
     }
-  }, [isAuthenticated, isLoading, router]);
+  }, [isAuthenticated, isInitializing, router]);
 
-  if (isLoading) {
+  if (isInitializing) {
     return (
       <div className="min-h-[60vh] flex items-center justify-center">
         <div className="spinner-electric" />

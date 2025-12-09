@@ -69,18 +69,18 @@ type TabType = 'profile' | 'addresses' | 'security' | 'notifications';
 
 export default function SettingsPage() {
   const router = useRouter();
-  const { user, isAuthenticated, isLoading, updateProfile, addAddress, removeAddress, setDefaultAddress, logout } = useUser();
+  const { user, isAuthenticated, isInitializing, updateProfile, addAddress, removeAddress, setDefaultAddress, logout } = useUser();
   const [activeTab, setActiveTab] = useState<TabType>('profile');
   const [showAddressForm, setShowAddressForm] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
 
   useEffect(() => {
-    if (!isLoading && !isAuthenticated) {
+    if (!isInitializing && !isAuthenticated) {
       router.push('/login');
     }
-  }, [isAuthenticated, isLoading, router]);
+  }, [isAuthenticated, isInitializing, router]);
 
-  if (isLoading || !user) {
+  if (isInitializing || !user) {
     return (
       <div className="min-h-[60vh] flex items-center justify-center">
         <div className="spinner-electric" />

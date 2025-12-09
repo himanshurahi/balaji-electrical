@@ -27,6 +27,7 @@ import {
 } from 'lucide-react';
 import { useCart } from '@/context/CartContext';
 import { useUser, Address } from '@/context/UserContext';
+import FullPageLoader from '@/components/FullPageLoader';
 
 const AddressSchema = Yup.object().shape({
   name: Yup.string().required('Address label is required'),
@@ -52,7 +53,7 @@ const steps: { id: CheckoutStep; label: string; icon: React.ElementType }[] = [
 export default function CheckoutPage() {
   const router = useRouter();
   const { items, getCartTotal, clearCart } = useCart();
-  const { user, isAuthenticated, isLoading, addAddress } = useUser();
+  const { user, isAuthenticated, isInitializing, addAddress } = useUser();
   
   const [currentStep, setCurrentStep] = useState<CheckoutStep>('address');
   const [selectedAddress, setSelectedAddress] = useState<Address | null>(null);
@@ -63,14 +64,14 @@ export default function CheckoutPage() {
 
   // Redirect if not authenticated or cart is empty (but not if order was just completed)
   useEffect(() => {
-    if (!isLoading && !orderCompleted) {
+    if (!isInitializing && !orderCompleted) {
       if (!isAuthenticated) {
         router.push('/login?redirect=/checkout');
       } else if (items.length === 0) {
         router.push('/cart');
       }
     }
-  }, [isAuthenticated, isLoading, items.length, router, orderCompleted]);
+  }, [isAuthenticated, isInitializing, items.length, router, orderCompleted]);
 
   // Set default address on load
   useEffect(() => {
@@ -147,19 +148,14 @@ export default function CheckoutPage() {
   // Show full-page loading overlay during order processing to prevent footer flash
   if (isProcessing) {
     return (
-      <div className="fixed inset-0 z-50 flex items-center justify-center bg-carbon-950 overflow-hidden">
-        {/* Hide body scrollbar while loading */}
-        <style jsx global>{`body { overflow: hidden !important; }`}</style>
-        <div className="text-center">
-          <Loader2 className="w-12 h-12 text-electric-400 animate-spin mx-auto mb-4" />
-          <p className="text-white font-semibold text-lg">Processing your order...</p>
-          <p className="text-carbon-400 text-sm mt-2">Please wait while we confirm your payment</p>
-        </div>
-      </div>
+      <FullPageLoader 
+        message="Processing your order..." 
+        submessage="Please wait while we confirm your payment" 
+      />
     );
   }
 
-  if (isLoading || !user) {
+  if (isInitializing || !user) {
     return (
       <div className="min-h-[60vh] flex items-center justify-center">
         <div className="spinner-electric" />

@@ -1,7 +1,7 @@
 'use client';
 
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { Zap } from 'lucide-react';
+import FullPageLoader from '@/components/FullPageLoader';
 
 export interface User {
   id: string;
@@ -50,7 +50,8 @@ export interface OrderItem {
 interface UserContextType {
   user: User | null;
   isAuthenticated: boolean;
-  isLoading: boolean;
+  isLoading: boolean; // For button/component loading states (login, signup, etc.)
+  isInitializing: boolean; // For initial auth check on page load (full-page loader)
   orders: Order[];
   login: (email: string, password: string) => Promise<boolean>;
   signup: (name: string, email: string, password: string) => Promise<boolean>;
@@ -147,10 +148,11 @@ const sampleOrders: Order[] = [
 
 export function UserProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isInitializing, setIsInitializing] = useState(true); // For initial auth check only
+  const [isLoading, setIsLoading] = useState(false); // For login/signup button states
   const [orders, setOrders] = useState<Order[]>([]);
 
-  // Load user from localStorage on mount
+  // Load user from localStorage on mount (initial auth check)
   useEffect(() => {
     const savedUser = localStorage.getItem('balaji-user');
     if (savedUser) {
@@ -162,7 +164,7 @@ export function UserProvider({ children }: { children: ReactNode }) {
         console.error('Error parsing user data:', e);
       }
     }
-    setIsLoading(false);
+    setIsInitializing(false);
   }, []);
 
   // Save user to localStorage whenever it changes
@@ -311,40 +313,10 @@ export function UserProvider({ children }: { children: ReactNode }) {
     return newOrder;
   };
 
-  // Show full-page loader while checking authentication
+  // Show full-page loader only during initial auth check (page load/reload)
   // This prevents layout flash and will be useful for server-side auth
-  if (isLoading) {
-    return (
-      <div className="fixed inset-0 z-[100] flex items-center justify-center bg-carbon-950 overflow-hidden">
-        {/* Hide body scrollbar while loading */}
-        <style jsx global>{`body { overflow: hidden !important; }`}</style>
-        <div className="text-center">
-          {/* Animated Logo */}
-          <div className="relative mb-6">
-            <div className="w-20 h-20 mx-auto rounded-2xl bg-gradient-to-br from-electric-500 to-electric-600 flex items-center justify-center animate-pulse">
-              <Zap className="w-10 h-10 text-white" />
-            </div>
-            {/* Glow effect */}
-            <div className="absolute inset-0 w-20 h-20 mx-auto rounded-2xl bg-electric-500/30 blur-xl animate-pulse" />
-          </div>
-          
-          {/* Brand Name */}
-          <h1 className="font-display text-2xl font-bold text-white tracking-wider mb-2">
-            BALAJI
-          </h1>
-          <p className="text-xs text-electric-400 tracking-widest mb-6">
-            ELECTRICALS
-          </p>
-          
-          {/* Loading indicator */}
-          <div className="flex items-center justify-center gap-1">
-            <div className="w-2 h-2 rounded-full bg-electric-400 animate-bounce" style={{ animationDelay: '0ms' }} />
-            <div className="w-2 h-2 rounded-full bg-electric-400 animate-bounce" style={{ animationDelay: '150ms' }} />
-            <div className="w-2 h-2 rounded-full bg-electric-400 animate-bounce" style={{ animationDelay: '300ms' }} />
-          </div>
-        </div>
-      </div>
-    );
+  if (isInitializing) {
+    return <FullPageLoader />;
   }
 
   return (
@@ -353,6 +325,7 @@ export function UserProvider({ children }: { children: ReactNode }) {
         user,
         isAuthenticated: !!user,
         isLoading,
+        isInitializing,
         orders,
         login,
         signup,

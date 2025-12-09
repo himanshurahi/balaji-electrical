@@ -87,7 +87,7 @@ export default function ProductDetailPage() {
               className="space-y-4"
             >
               {/* Main Image */}
-              <div className="relative aspect-square rounded-2xl overflow-hidden bg-carbon-800/50 glow-border">
+              <div className="relative aspect-square product-image-hero glow-border">
                 {/* Badges */}
                 <div className="absolute top-4 left-4 z-10 flex flex-col gap-2">
                   {product.badge === 'new' && (
@@ -124,7 +124,7 @@ export default function ProductDetailPage() {
                 {[1, 2, 3, 4].map((_, index) => (
                   <button
                     key={index}
-                    className={`w-20 h-20 rounded-lg overflow-hidden border-2 transition-all ${
+                    className={`w-20 h-20 rounded-lg overflow-hidden border-2 transition-all product-thumbnail ${
                       index === 0 ? 'border-electric-500' : 'border-transparent opacity-50'
                     }`}
                   >
