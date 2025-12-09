@@ -147,7 +147,9 @@ export default function CheckoutPage() {
   // Show full-page loading overlay during order processing to prevent footer flash
   if (isProcessing) {
     return (
-      <div className="fixed inset-0 z-50 flex items-center justify-center bg-carbon-950">
+      <div className="fixed inset-0 z-50 flex items-center justify-center bg-carbon-950 overflow-hidden">
+        {/* Hide body scrollbar while loading */}
+        <style jsx global>{`body { overflow: hidden !important; }`}</style>
         <div className="text-center">
           <Loader2 className="w-12 h-12 text-electric-400 animate-spin mx-auto mb-4" />
           <p className="text-white font-semibold text-lg">Processing your order...</p>

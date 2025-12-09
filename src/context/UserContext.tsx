@@ -315,7 +315,9 @@ export function UserProvider({ children }: { children: ReactNode }) {
   // This prevents layout flash and will be useful for server-side auth
   if (isLoading) {
     return (
-      <div className="fixed inset-0 z-[100] flex items-center justify-center bg-carbon-950">
+      <div className="fixed inset-0 z-[100] flex items-center justify-center bg-carbon-950 overflow-hidden">
+        {/* Hide body scrollbar while loading */}
+        <style jsx global>{`body { overflow: hidden !important; }`}</style>
         <div className="text-center">
           {/* Animated Logo */}
           <div className="relative mb-6">
